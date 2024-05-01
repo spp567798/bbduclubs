@@ -1,7 +1,34 @@
 from django.db import models
-
-from django.db import models
 from django.contrib.auth.models import User
+
+class MemberProfile(models.Model):
+    gender_choices = [
+        ('male', "Male"),
+        ('female', "Female"),
+        ('other', "Dont want to disclose")
+    ]
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    picture= models.ImageField(upload_to='profile/')
+    gender = models.CharField(max_length=10, choices=gender_choices)
+    course = models.CharField(max_length=50)
+    bio = models.TextField()
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=1)
+
+class LeaderProfile(models.Model):
+    gender_choices = [
+        ('male', "Male"),
+        ('female', "Female"),
+        ('other', "Dont want to disclose")
+    ]
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    picture= models.ImageField(upload_to='profile/')
+    gender = models.CharField(max_length=10, choices=gender_choices)
+    club= models.CharField(max_length=50)
+    course = models.CharField(max_length=50)
+    bio = models.TextField()
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=1)
 
 class Club(models.Model):
     name = models.CharField(max_length=100)
@@ -44,4 +71,3 @@ class Comment(models.Model):
     content = models.TextField(default="👍")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-

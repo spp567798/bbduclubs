@@ -1,0 +1,84 @@
+{% if user.is_authenticated %}
+<header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+
+        <a href="index.html" class="logo d-flex align-items-center  me-auto me-lg-0">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <!-- <img src="/static/img/logo.png" alt=""> -->
+            <i class="bi bi-camera"></i>&nbsp;<h3> AIsolutions</h3>
+        </a>
+
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a href="{% url 'home' %}" class="active">HOME</a></li>
+                <li><a href="{% url 'about' %}">ABOUT</a></li>
+                <!-- <li class="dropdown"><a href="#"><span>Models</span> <i
+                            class="bi bi-chevron-down dropdown-indicator"></i></a> -->
+                    <ul>
+                <li><a href="gallery.html">JOB</a></li>
+                <li><a href="{% url 'uploadcv' %}">RESUME</a></li>
+                <li><a href="{% url 'contact' %}">CONTACT</a></li>
+                <li><a href="gallery.html">FEEDBACK</a></li>
+                        <!-- <li class="dropdown"><a href="#"><span>Sub Menu</span> <i
+                                    class="bi bi-chevron-down dropdown-indicator"></i></a>
+                            <ul>
+                                <li><a href="#">Sub Menu 1</a></li>
+                                <li><a href="#">Sub Menu 2</a></li>
+                                <li><a href="#">Sub Menu 3</a></li>
+                            </ul> -->
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="services.html">SERVICES</a></li>
+                <!-- <li><a href="contact.html">CONTACT</a></li> -->
+
+                {% if not user.is_authenticated %}
+                <li><a href="{% url 'hlogin' %}">hr</a></li>
+                {% endif %}
+
+
+                {% if not user.is_authenticated %}
+                <li class="dropdown"><a href="#"><span>Account</span> <i
+                            class="bi bi-chevron-down dropdown-indicator"></i></a>
+                    <ul>
+                        <li> <a href="{% url 'ulogin' %}">Login</a></li>
+                        <li><a href="{% url 'uregister' %}">Register</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li class="dropdown">
+                    <a href="#">
+                        <span>
+                            <i class="bi bi-person-circle"></i>
+                        </span>
+                        <i class="bi bi-chevron-down dropdown-indicator"></i>
+                    </a>
+                    <ul>
+                        {% if user.groups.all.0.name == 'user' %}
+                        <li> <a href="{% url 'user_dashboard' %}">Dashboard</a></li>
+                        <li> <a href="{% url 'user_profile' %}">Profile</a></li>
+                        {% elif user.groups.all.0.name == 'hr' %}
+                        <li> <a href="{% url 'hr_dashboard' %}">Dashboard</a></li>
+                        <li> <a href="{% url 'hr_profile_view' %}">Profile</a></li>
+                        {% endif %}
+                        <li> <a href="{% url 'logout' %}">Logout</a></li>
+                      </ul>
+                </li>
+                {% endif %}
+
+
+            </ul>
+        </nav><!-- .navbar -->
+
+        <!-- <div class="header-social-links">
+            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
+        </div>
+        <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+        <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+
+    </div> -->
+</header><!-- End Header -->
+{% endif %}
